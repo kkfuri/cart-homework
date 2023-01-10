@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { useProducts } from "../context/products.context";
-import { useRules } from "../context/rules.context";
+import { useProducts } from "../../context/products.context";
+import { useRules } from "../../context/rules.context";
 
 function Rules() {
   const { rules, removeRule, createRule } = useRules();
