@@ -9,6 +9,7 @@ interface ContextProps {
 
 type RulesContextType = {
   rules: Record<string, CustomRule>;
+  createRule: (sku: string, rule: CustomRule) => void;
   removeRule: (sku: string) => void;
 };
 
@@ -19,6 +20,10 @@ export const RulesContext = React.createContext<RulesContextType | undefined>(
 export const RulesProvider = ({ children }: ContextProps) => {
   const [rules, setRules] = useState(DEFAULT_RULES);
 
+  function createRule(sku: string, rule: CustomRule) {
+    setRules((v) => ({ ...v, [sku]: rule }));
+  }
+
   function removeRule(sku: string) {
     setRules((v) => {
       const copy = { ...v };
@@ -28,7 +33,7 @@ export const RulesProvider = ({ children }: ContextProps) => {
   }
 
   return (
-    <RulesContext.Provider value={{ rules, removeRule }}>
+    <RulesContext.Provider value={{ rules, createRule, removeRule }}>
       {children}
     </RulesContext.Provider>
   );

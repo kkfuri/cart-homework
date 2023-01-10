@@ -3,9 +3,28 @@ import { useProducts } from "../context/products.context";
 import { useRules } from "../context/rules.context";
 
 function Rules() {
-  const { rules, removeRule } = useRules();
+  const { rules, removeRule, createRule } = useRules();
   const { products } = useProducts();
   const [isOpen, setIsOpen] = useState(false);
+
+  function handleFormSubmit(e: React.FormEvent) {
+    e.preventDefault();
+    const data = new FormData(e.currentTarget as HTMLFormElement);
+
+    const sku = String(data.get("sku"));
+    const price = Number(data.get("price"));
+    const quantity = Number(data.get("quantity"));
+
+    if (!sku || !price || !quantity) return;
+
+    createRule(sku, { price, quantity });
+
+    (e.target as HTMLFormElement).reset();
+  }
+
+  const productsWithoutRule = Object.entries(products).filter(
+    ([sku]) => !rules[sku]
+  );
 
   return (
     <>
@@ -27,38 +46,47 @@ function Rules() {
                 Close
               </button>
             </div>
-            <div className="my-4">
-              <h5 className="text-lg font-bold mb-2">Create new rule</h5>
-              <form className="flex space-x-4">
-                <select
-                  name="sku"
-                  className="border border-gray-200 p-2 text-sm rounded"
+            {productsWithoutRule.length > 0 && (
+              <div className="my-4">
+                <h5 className="text-lg font-bold mb-2">Create new rule</h5>
+                <form
+                  className="flex space-y-2 lg:space-y-0 lg:space-x-4 lg:items-center lg:flex-row flex-col "
+                  onSubmit={handleFormSubmit}
+                  autoComplete="off"
                 >
-                  {Object.entries(products)
-                    .filter(([sku]) => !rules[sku])
-                    .map(([sku, product]) => (
+                  <select
+                    name="sku"
+                    className="border border-gray-200 p-2 text-sm rounded pr-6"
+                  >
+                    {productsWithoutRule.map(([sku, product]) => (
                       <option value={sku}>{product.name}</option>
                     ))}
-                </select>
-                <input
-                  type="text"
-                  inputMode="numeric"
-                  pattern="[0-9]*"
-                  name="quantity"
-                  placeholder="Quantity"
-                  className="border border-gray-200 p-2 text-sm rounded"
-                />
-                <input
-                  type="text"
-                  inputMode="numeric"
-                  pattern="[0-9]*"
-                  name="price"
-                  placeholder="Price"
-                  className="border border-gray-200 p-2 text-sm rounded"
-                />
-                <button type="submit">Create!</button>
-              </form>
-            </div>
+                  </select>
+                  <input
+                    type="text"
+                    inputMode="numeric"
+                    pattern="[0-9]*"
+                    name="quantity"
+                    placeholder="Quantity (example: 4)"
+                    className="border border-gray-200 p-2 text-sm rounded"
+                  />
+                  <input
+                    type="text"
+                    inputMode="numeric"
+                    pattern="[0-9.]*"
+                    name="price"
+                    placeholder="Price (example: 100)"
+                    className="border border-gray-200 p-2 text-sm rounded"
+                  />
+                  <button
+                    className="border rounded text-blue-600 border-blue-400 hover:border-blue-500 transition px-2 py-.5"
+                    type="submit"
+                  >
+                    Create!
+                  </button>
+                </form>
+              </div>
+            )}
             <ul className="grid grid-cols-2 lg:grid-cols-3 h-full gap-4">
               {Object.entries(rules).map(([sku, rule]) => (
                 <li
