@@ -1,6 +1,7 @@
 import ProductCard from "../components/ProductCard";
 import Cart from "../components/Cart";
-import Rules from "../components/Rules";
+import Rules from "../components/containers/Rules";
+import Products from "../components/containers/Products";
 
 import { useProducts } from "../context/products.context";
 import { useCart } from "../context/cart.context";
@@ -15,8 +16,9 @@ function Homepage() {
     <div className="max-w-5xl mx-auto lg:mr-[26rem] min-h-screen px-8 py-12">
       <div className="flex items-center justify-between">
         <div className="flex items-center space-x-4">
-          <h2 className="text-xl lg:text-3xl">Product list</h2>
+          <h2 className="text-xl lg:text-3xl">Prismic store!</h2>
           <Rules />
+          <Products />
         </div>
         <Cart />
       </div>
