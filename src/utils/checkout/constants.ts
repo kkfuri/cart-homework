@@ -14,15 +14,7 @@ export const DEFAULT_PRODUCTS = {
   P: { sku: "P", price: 50, name: "Papaya" },
 };
 
-export const DEFAULT_RULES = [
-  {
-    product: "A",
-    quantity: 3,
-    price: 130,
-  },
-  {
-    product: "B",
-    quantity: 2,
-    price: 45,
-  },
-];
+export const DEFAULT_RULES = {
+  A: { quantity: 3, price: 130 },
+  B: { quantity: 2, price: 45 },
+};

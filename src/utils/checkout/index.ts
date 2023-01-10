@@ -1,12 +1,12 @@
 import { DEFAULT_PRODUCTS, DEFAULT_RULES } from "./constants";
 
 export type Product = { sku: string; price: number; name: string };
-export type CustomRule = { product: string; quantity: number; price: number };
+export type CustomRule = { quantity: number; price: number };
 
 type CheckoutInputs = {
   cart: string;
   products?: Record<Product["sku"], Product>;
-  rules?: CustomRule[];
+  rules?: Record<Product["sku"], CustomRule>;
 };
 
 export function calculateCart(cart: string): Record<string, number> {
@@ -22,11 +22,10 @@ export function calculateCart(cart: string): Record<string, number> {
 export function calculateItemPrice(
   product: Product,
   amount: number,
-  rules: CustomRule[]
+  rules: Record<Product["sku"], CustomRule>
 ): number {
-  const customRule = rules.find(
-    (rule) => rule.product === product.sku && amount >= rule.quantity
-  );
+  const customRule =
+    amount >= rules[product.sku]?.quantity && rules[product.sku];
 
   let price = 0;
 

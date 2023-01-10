@@ -34,7 +34,7 @@ function Cart() {
       </button>
       <div
         className={[
-          "fixed bottom-0 left-0 right-0 lg:right-10 lg:left-auto lg:block",
+          "fixed bottom-0 lg:bottom-10 left-0 right-0 lg:right-10 lg:left-auto lg:block",
           isOpen ? "block" : "hidden",
         ].join(" ")}
       >

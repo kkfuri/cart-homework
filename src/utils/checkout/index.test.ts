@@ -38,10 +38,10 @@ describe("checkout", () => {
   });
 
   test("It is possible to have custom rules database", () => {
-    const rulesDatabase = [
-      { product: "A", quantity: 2, price: 80 },
-      { product: "D", quantity: 5, price: 60 },
-    ];
+    const rulesDatabase = {
+      A: { quantity: 2, price: 80 },
+      D: { quantity: 5, price: 60 },
+    };
     expect(checkout({ cart: "AADDDDD", rules: rulesDatabase })).toBe(140);
   });
 });
