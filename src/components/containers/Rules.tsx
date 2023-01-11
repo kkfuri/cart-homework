@@ -1,10 +1,8 @@
 import { useState } from "react";
-import { useProducts } from "../../context/products.context";
-import { useRules } from "../../context/rules.context";
+import { useMarket } from "../../context/market.context";
 
 function Rules() {
-  const { rules, removeRule, createRule } = useRules();
-  const { products } = useProducts();
+  const { products, rules, removeRule, createRule } = useMarket();
   const [isOpen, setIsOpen] = useState(false);
 
   function handleFormSubmit(e: React.FormEvent) {
@@ -15,7 +13,7 @@ function Rules() {
     const price = Number(data.get("price"));
     const quantity = Number(data.get("quantity"));
 
-    if (!sku || !price || !quantity) return;
+    if (!sku || !price || !quantity) return alert("All fields are required!");
 
     createRule(sku, { price, quantity });
 

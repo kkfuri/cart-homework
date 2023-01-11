@@ -1,10 +1,11 @@
-import React, { useContext, useMemo, useState } from "react";
+import React, { useContext, useEffect, useMemo, useState } from "react";
+
+import { useMarket } from "./market.context";
 import {
   calculateCart,
   calculateItemPrice,
   type Product,
 } from "../utils/checkout";
-import { useRules } from "./rules.context";
 
 interface ContextProps {
   children: React.ReactNode;
@@ -24,7 +25,7 @@ export const CartContext = React.createContext<CartContextType | undefined>(
 );
 
 export const CartProvider = ({ children }: ContextProps) => {
-  const { rules } = useRules();
+  const { products, rules } = useMarket();
   const [cart, setCart] = useState("");
 
   function addItemToCart(sku: string) {
@@ -44,6 +45,8 @@ export const CartProvider = ({ children }: ContextProps) => {
   }
 
   const cartCount = useMemo(() => calculateCart(cart), [cart]);
+
+  useEffect(() => setCart(""), [products]);
 
   return (
     <CartContext.Provider

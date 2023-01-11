@@ -1,17 +1,15 @@
-import { useState } from "react";
+import React, { useState, Fragment } from "react";
 
 import { checkout } from "../utils/checkout";
 
 import CartItem from "./CartItem";
 
 import { useCart } from "../context/cart.context";
-import { useProducts } from "../context/products.context";
-import { useRules } from "../context/rules.context";
+import { useMarket } from "../context/market.context";
 
 function Cart() {
   const [isOpen, setIsOpen] = useState(false);
-  const { products } = useProducts();
-  const { rules } = useRules();
+  const { products, rules } = useMarket();
   const { cart, addItemToCart, cartCount, clearCart, removeItemFromCart } =
     useCart();
 
@@ -49,9 +47,11 @@ function Cart() {
               .sort()
               .map(([sku, amount]) => {
                 const product = products[sku as keyof typeof products];
+                if (!product) return <Fragment key={sku} />;
 
                 return (
                   <CartItem
+                    key={sku}
                     product={product}
                     amount={amount}
                     onClickIncrease={addItemToCart}

@@ -1,21 +1,23 @@
 import { useState } from "react";
-import { useProducts } from "../../context/products.context";
+
+import { useMarket } from "../../context/market.context";
 
 function Rules() {
-  const { products } = useProducts();
+  const { products, createProduct, removeProduct } = useMarket();
   const [isOpen, setIsOpen] = useState(false);
 
   function handleFormSubmit(e: React.FormEvent) {
     e.preventDefault();
     const data = new FormData(e.currentTarget as HTMLFormElement);
 
+    const sku = String(data.get("sku"));
     const name = String(data.get("name"));
     const price = Number(data.get("price"));
 
-    if (!name || !price) return;
+    if (products[sku]) return alert("The SKU should be unique!");
+    if (!sku || !name || !price) return alert("All fields are required!");
 
-    console.log(name, { price });
-
+    createProduct(sku, { name, price });
     (e.target as HTMLFormElement).reset();
   }
 
@@ -48,6 +50,13 @@ function Rules() {
               >
                 <input
                   type="text"
+                  name="sku"
+                  placeholder="SKU (example: D)"
+                  className="border border-gray-200 p-2 text-sm rounded"
+                  maxLength={1}
+                />
+                <input
+                  type="text"
                   name="name"
                   placeholder="Name (example: Apple)"
                   className="border border-gray-200 p-2 text-sm rounded"
@@ -68,6 +77,10 @@ function Rules() {
                 </button>
               </form>
             </div>
+            <p className="text-sm tracking-wide text-red-400 border border-red-400 rounded w-auto px-3 py-1 mb-4 inline-flex">
+              <strong className="mr-1">Warning:</strong> Deleting a product will
+              clear the current cart.
+            </p>
             <ul className="grid grid-cols-2 lg:grid-cols-3 h-full gap-4">
               {Object.entries(products).map(([sku, product]) => (
                 <li
@@ -79,7 +92,7 @@ function Rules() {
                   </span>
                   <button
                     className="text-red-500 px-1 py-0.5 text-sm border border-red-500 rounded-sm hover:bg-red-100/50 transition"
-                    onClick={() => console.log(sku)}
+                    onClick={() => removeProduct(sku)}
                   >
                     Remove
                   </button>

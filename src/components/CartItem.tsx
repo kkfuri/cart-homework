@@ -1,5 +1,6 @@
 import { useCart } from "../context/cart.context";
-import { useRules } from "../context/rules.context";
+import { useMarket } from "../context/market.context";
+
 import type { Product } from "../utils/checkout";
 
 type CartItemProps = {
@@ -15,13 +16,11 @@ function CartItem({
   onClickDecrease,
   product,
 }: CartItemProps) {
-  const { rules } = useRules();
+  const { rules } = useMarket();
   const { calculateCartItemPrice } = useCart();
   const price = calculateCartItemPrice(product, amount);
   const hasDiscount =
     rules[product.sku] && amount >= rules[product.sku].quantity;
-
-  console.log(rules[product.sku]);
 
   return (
     <li

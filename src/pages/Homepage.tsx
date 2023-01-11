@@ -3,13 +3,11 @@ import Cart from "../components/Cart";
 import Rules from "../components/containers/Rules";
 import Products from "../components/containers/Products";
 
-import { useProducts } from "../context/products.context";
+import { useMarket } from "../context/market.context";
 import { useCart } from "../context/cart.context";
-import { useRules } from "../context/rules.context";
 
 function Homepage() {
-  const { products } = useProducts();
-  const { rules } = useRules();
+  const { products, rules } = useMarket();
   const { addItemToCart } = useCart();
 
   return (
