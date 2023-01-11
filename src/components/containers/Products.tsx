@@ -70,7 +70,7 @@ function Rules() {
                   className="border border-gray-200 p-2 text-sm rounded"
                 />
                 <button
-                  className="border rounded text-blue-600 border-blue-400 hover:border-blue-500 transition px-2 py-.5"
+                  className="border rounded text-blue-600 border-blue-400 hover:border-blue-500 transition px-2 py-0.5"
                   type="submit"
                 >
                   Create!
