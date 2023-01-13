@@ -32,7 +32,7 @@ export const MarketProvider = ({ children }: ContextProps) => {
   function removeRule(sku: Sku) {
     setRules((v) => {
       const copy = { ...v };
-      delete copy.sku;
+      delete copy[sku];
       return copy;
     });
   }

@@ -57,7 +57,9 @@ function Rules() {
                     className="border border-gray-200 p-2 text-sm rounded pr-6"
                   >
                     {productsWithoutRule.map(([sku, product]) => (
-                      <option value={sku}>{product.name}</option>
+                      <option key={sku} value={sku}>
+                        {product.name}
+                      </option>
                     ))}
                   </select>
                   <input
