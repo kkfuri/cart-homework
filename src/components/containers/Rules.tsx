@@ -25,12 +25,12 @@ function Rules() {
   );
 
   return (
-    <>
+    <div>
       <button
-        onClick={() => setIsOpen(true)}
-        className="rounded border border-gray-400 bg-gray-200 px-2 py-1 flex items-center"
+        onClick={() => setIsOpen((v) => !v)}
+        className="rounded border border-gray-400 bg-gray-200 px-2 py-1 inline hover:bg-gray-100 transition"
       >
-        Rules settings
+        Rules <span className="sr-only lg:not-sr-only">settings</span>
       </button>
       {isOpen && (
         <div className="min-h-screen min-w-screen bg-white absolute inset-0 z-10">
@@ -88,7 +88,7 @@ function Rules() {
             <ul className="grid grid-cols-2 lg:grid-cols-3 h-full gap-4">
               {Object.entries(rules).map(([sku, rule]) => (
                 <li
-                  className="p-4 flex items-center justify-between rounded border border-gray-300"
+                  className="p-4 flex items-center justify-between rounded border border-gray-300 lg:flex-row flex-col"
                   key={sku}
                 >
                   <span>
@@ -106,7 +106,7 @@ function Rules() {
           </div>
         </div>
       )}
-    </>
+    </div>
   );
 }
 

@@ -1,11 +1,11 @@
 import React, { useState, Fragment } from "react";
 
-import { checkout } from "../utils/checkout";
+import { checkout } from "../../utils/checkout";
 
-import CartItem from "./CartItem";
+import CartItem from "../CartItem";
 
-import { useCart } from "../context/cart.context";
-import { useMarket } from "../context/market.context";
+import { useCart } from "../../context/cart.context";
+import { useMarket } from "../../context/market.context";
 
 function Cart() {
   const [isOpen, setIsOpen] = useState(false);
@@ -16,10 +16,10 @@ function Cart() {
   if (!cart) return <></>;
 
   return (
-    <>
+    <div>
       <button
         onClick={() => setIsOpen((v) => !v)}
-        className="rounded border border-gray-400 bg-gray-200 px-2 py-1 lg:hidden flex items-center"
+        className="rounded border border-gray-400 bg-gray-200 px-2 py-1 lg:hidden inline hover:bg-gray-100 transition"
       >
         {isOpen ? "Close" : "Open"} cart
         <span className="text-gray-600 text-sm ml-1">
@@ -32,15 +32,23 @@ function Cart() {
           isOpen ? "block" : "hidden",
         ].join(" ")}
       >
-        <div className="relative w-full lg:w-96 py-8 px-6 rounded border border-gray-300 bg-gray-200 drop-shadow-xl">
+        <div className="relative w-full lg:w-96 py-8 px-6 rounded lg:border border-gray-300 bg-gray-200 drop-shadow-xl">
           <div className="flex items-center justify-between mb-6">
             <h3 className="text-3xl">Cart</h3>
-            <button
-              className="px-2 py-1 rounded border border-gray-500 bg-gray-300 hover:bg-gray-200 transition"
-              onClick={clearCart}
-            >
-              Clear cart
-            </button>
+            <div className="flex space-x-2">
+              <button
+                className="px-2 py-1 rounded border border-red-700 bg-red-200 text-red-800 hover:bg-red-100 transition"
+                onClick={clearCart}
+              >
+                Clear cart
+              </button>
+              <button
+                className="px-2 py-1 rounded border border-gray-500 bg-gray-300 hover:bg-gray-200 transition lg:hidden block"
+                onClick={() => setIsOpen(false)}
+              >
+                Close cart
+              </button>
+            </div>
           </div>
           <ul className="space-y-2 max-h-[30vh] overflow-y-auto pr-4">
             {Object.entries(cartCount)
@@ -66,7 +74,7 @@ function Cart() {
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 }
 

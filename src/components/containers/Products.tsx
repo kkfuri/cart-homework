@@ -17,21 +17,21 @@ function Rules() {
     if (products[sku]) return alert("The SKU should be unique!");
     if (!sku || !name || !price) return alert("All fields are required!");
 
-    createProduct(sku, { name, price });
+    createProduct(sku, { sku, name, price });
     (e.target as HTMLFormElement).reset();
   }
 
   return (
-    <>
+    <div>
       <button
-        onClick={() => setIsOpen(true)}
-        className="rounded border border-gray-400 bg-gray-200 px-2 py-1 flex items-center"
+        onClick={() => setIsOpen((v) => !v)}
+        className="rounded border border-gray-400 bg-gray-200 px-2 py-1 inline hover:bg-gray-100 transition"
       >
-        Products management
+        Products <span className="sr-only lg:not-sr-only">management</span>
       </button>
       {isOpen && (
-        <div className="min-h-screen min-w-screen bg-white absolute inset-0 z-10">
-          <div className="max-w-5xl mx-auto py-12 px-8">
+        <div className="min-h-screen h-full min-w-screen bg-white absolute inset-0 z-10">
+          <div className="max-w-5xl mx-auto py-12 px-8 bg-white">
             <div className="flex justify-between items-center mb-8">
               <h3 className="text-xl lg:text-3xl">Products</h3>
               <button
@@ -84,7 +84,7 @@ function Rules() {
             <ul className="grid grid-cols-2 lg:grid-cols-3 h-full gap-4">
               {Object.entries(products).map(([sku, product]) => (
                 <li
-                  className="p-4 flex items-center justify-between rounded border border-gray-300"
+                  className="p-4 flex items-center justify-between rounded border border-gray-300 lg:flex-row flex-col"
                   key={sku}
                 >
                   <span>
@@ -102,7 +102,7 @@ function Rules() {
           </div>
         </div>
       )}
-    </>
+    </div>
   );
 }
 

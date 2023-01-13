@@ -2,15 +2,16 @@ import { DEFAULT_PRODUCTS, DEFAULT_RULES } from "./constants";
 
 export type Product = { sku: string; price: number; name: string };
 export type CustomRule = { quantity: number; price: number };
+export type Sku = Product["sku"];
 
 type CheckoutInputs = {
   cart: string;
-  products?: Record<Product["sku"], Product>;
-  rules?: Record<Product["sku"], CustomRule>;
+  products?: Record<Sku, Product>;
+  rules?: Record<Sku, CustomRule>;
 };
 
-export function calculateCart(cart: string): Record<string, number> {
-  const productsCount: Record<string, number> = {};
+export function calculateCart(cart: string): Record<Sku, number> {
+  const productsCount: Record<Sku, number> = {};
 
   cart
     .split("")
@@ -22,7 +23,7 @@ export function calculateCart(cart: string): Record<string, number> {
 export function calculateItemPrice(
   product: Product,
   amount: number,
-  rules: Record<Product["sku"], CustomRule>
+  rules: Record<Sku, CustomRule>
 ): number {
   const customRule =
     amount >= rules[product.sku]?.quantity && rules[product.sku];

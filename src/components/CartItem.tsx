@@ -32,18 +32,18 @@ function CartItem({
         <div className="inline-flex space-x-1 items-center mr-2 flex-1">
           <button
             className="px-1 py-0.5 rounded text-sm transition border border-gray-300 text-gray-700"
-            onClick={() => onClickIncrease(product.sku)}
-            aria-label={`Increase ${product.name}`}
-          >
-            +
-          </button>
-          <span className="font-bold w-6 text-center">{amount}</span>
-          <button
-            className="px-1 py-0.5 rounded text-sm transition border border-gray-300 text-gray-700"
             onClick={() => onClickDecrease(product.sku)}
             aria-label={`Decrease ${product.name}`}
           >
             -
+          </button>
+          <span className="font-bold w-6 text-center">{amount}</span>
+          <button
+            className="px-1 py-0.5 rounded text-sm transition border border-gray-300 text-gray-700"
+            onClick={() => onClickIncrease(product.sku)}
+            aria-label={`Increase ${product.name}`}
+          >
+            +
           </button>
         </div>
         {product.name}
