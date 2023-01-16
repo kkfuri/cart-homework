@@ -32,6 +32,7 @@ function ProductCard({
       <button
         className="rounded px-2 py-1 bg-green-700 hover:bg-green-500 transition text-white"
         onClick={() => onClickAddToCart(sku)}
+        aria-label={`Add ${name} to cart`}
       >
         Add to cart
       </button>
